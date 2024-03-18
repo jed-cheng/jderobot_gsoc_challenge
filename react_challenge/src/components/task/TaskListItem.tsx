@@ -1,14 +1,11 @@
 import { CalendarDays, Circle } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Badge } from "../ui/badge";
+import { type Task } from "@/lib/schema";
 
-interface TodoListItemProps {
-    id: number;
-    title: string;
-    completed: boolean;
-}
 
-export default function TodoListItem() {
+export default function TaskListItem(props: Task) {
+    console.log("task props:",props)
     return (
         <div className=" flex items-center px-4 py-2 cursor-pointer min-w-64 max-w-80 min-h-16 border rounded-md hover:bg-primary-foreground">
             <Checkbox className="mr-4"/>

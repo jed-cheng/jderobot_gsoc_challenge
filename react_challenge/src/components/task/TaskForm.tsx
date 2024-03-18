@@ -2,53 +2,44 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
-  FormMessage,
+
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { CalendarIcon, Circle, Tag } from "lucide-react"
+import {  Circle, Tag } from "lucide-react"
 import PrioritySelect from "./PrioritySelect"
-import { TodoProps } from "@/lib/types"
 import DatePicker from "./DatePicker"
 import CategoryPicker from "./CategoryPicker"
+import { Task, taskSchema } from "@/lib/schema"
 
-const formSchema = z.object({
-  name: z.string().max(100).optional(),
-  due: z.date().optional(),
-  priority: z.string().optional(),
-  category: z.string().optional(),
-})
 
 
 interface TodoFormProps {
-  todo?: TodoProps  
+  todo?: Task  
 }
 
-export default function TodoForm({
+export default function TaskForm({
   todo
 }: TodoFormProps) {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<Task>({
+    resolver: zodResolver(taskSchema),
     defaultValues: {
-      name: todo?.name,
+      title: todo?.title,
       due: todo?.due,
       category: todo?.category,
       priority: todo?.priority,
     }
   })
 
-  const name = form.watch("name")
+  const title = form.watch("title")
  
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: Task) {
 
     console.log(values)
   }
@@ -58,7 +49,7 @@ export default function TodoForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="title"
           render={({ field }) => (
             <FormItem >
               <FormControl>
@@ -108,7 +99,7 @@ export default function TodoForm({
         <Button 
           type="submit" 
           className="w-full h-12"
-          disabled = {!name}
+          disabled = {!title}
         >
           Save
         </Button>

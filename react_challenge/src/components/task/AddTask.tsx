@@ -3,9 +3,9 @@
 import { CalendarDays, Circle, Plus } from "lucide-react";
 
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
-import TodoForm from "./TodoForm";
+import TaskForm from "./TaskForm";
 
-export default function AddTodo() {
+export default function AddTask() {
     return (
         <Dialog>
             <DialogTrigger>
@@ -17,7 +17,7 @@ export default function AddTodo() {
                 </div>
             </DialogTrigger>
             <DialogContent>
-                <TodoForm/>
+                <TaskForm/>
             </DialogContent>
         </Dialog>
 
