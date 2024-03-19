@@ -10,8 +10,8 @@ export default function TaskListItem(props: Task) {
     const priority = priorities.find((p) => p.value === props.priority)
 
     return (
-        <div className=" flex items-center px-4 py-2 cursor-pointer min-w-64 max-w-80 min-h-16 border rounded-md hover:bg-primary-foreground">
-            <Checkbox className="mr-4"/>
+        <div className=" flex items-center px-4 py-2 cursor-pointer min-w-40  min-h-16 border rounded-md hover:bg-primary-foreground">
+            <Checkbox className="mr-4 rounded-full"/>
             <div className="mr-4">
                 <span>{props.title}</span>
                 <div className=" flex items-center flex-wrap gap-x-2 leading-tight  ">
@@ -22,10 +22,12 @@ export default function TaskListItem(props: Task) {
                         </span>
                     )}
 
-                    <span>
-                        <Circle size={10} className=" inline mr-1" />
-                        category
-                    </span>
+                    {props.category && (
+                        <span>
+                            <Circle size={10} className=" inline mr-1" />
+                            category
+                        </span>
+                    )}
                 </div>
             </div>
             {props.priority && (

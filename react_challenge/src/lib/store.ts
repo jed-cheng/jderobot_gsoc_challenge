@@ -1,10 +1,10 @@
 import type { Action, ThunkAction } from "@reduxjs/toolkit";
 import { combineSlices, configureStore } from "@reduxjs/toolkit";
-import { todoSlice } from "./slices/todo/todoSlice";
+import { taskSlice } from "./slices/task/taskSlice";
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
-const rootReducer = combineSlices(todoSlice);
+const rootReducer = combineSlices(taskSlice);
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
 
