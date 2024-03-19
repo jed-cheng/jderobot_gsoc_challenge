@@ -10,13 +10,22 @@ const initialState: TaskSliceState = {
   tasks: [
     {
       title: "Task 1",
-      category: "work",
-      priority: undefined
     },
     {
-      title: "Task 1",
+      title: "Task 2",
       category: "work",
-      priority: undefined
+      priority: "1",
+      due: new Date("2022-01-01")
+    },
+    {
+      title: "Task 3",
+      category: "work",
+      priority: "2"
+    },
+    {
+      title: "Task 4",
+      category: "work",
+      priority: "3"
     }
   ],
 };

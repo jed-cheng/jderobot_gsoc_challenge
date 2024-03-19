@@ -1,23 +1,23 @@
 import { 
-  ArrowDownIcon, 
-  ArrowRightIcon, 
-  ArrowUpIcon } from "lucide-react";
+  CircleAlert, 
+  CircleDashed, 
+  CircleMinus } from "lucide-react";
 
 export const priorities = [
     {
       label: "Low",
       value: "1",
-      icon: ArrowDownIcon,
+      icon: CircleDashed ,
     },
     {
       label: "Medium",
       value: "2",
-      icon: ArrowRightIcon,
+      icon: CircleMinus,
     },
     {
       label: "High",
       value: "3",
-      icon: ArrowUpIcon,
+      icon: CircleAlert,
     },
 ]
 

@@ -1,9 +1,9 @@
 import { CalendarDays, Circle } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
-import { Badge } from "../ui/badge";
 import { type Task } from "@/lib/schema";
 import { priorities } from "@/lib/consts";
 import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 
 export default function TaskListItem(props: Task) {
@@ -18,28 +18,25 @@ export default function TaskListItem(props: Task) {
                     {props.due && (
                         <span>
                             <CalendarDays size={14} className= " inline mr-1"/> 
-                            <span className=" text-xs"> {props.due.toLocaleDateString()}</span>
+                            <span className=" text-xs"> {format(props.due, "PPP")}</span>
                         </span>
                     )}
 
                     {props.category && (
                         <span>
-                            <Circle size={10} className=" inline mr-1" />
-                            category
+                            <Circle size={8} className=" inline mr-1" />
+                            {props.category}
                         </span>
                     )}
                 </div>
             </div>
-            {props.priority && (
-                    <Badge variant={"outline"} className={cn(
-                        priority?.value === "1" && "bg-primary-foreground text-primary-foreground",
-                        priority?.value === "2" && "bg-primary-foreground text-primary-foreground",
-                        priority?.value === "3" && " bg-destructive-foreground text-destructive-foreground",
-                    
-                    )}>
-                        {priority?.icon && <priority.icon size={16} className="inline mr-1" />}
-                        {priority?.label}
-                    </Badge>
+            {props.priority && priority?.icon && (
+                 <priority.icon size={16} className={cn("inline mr-1 ml-auto",
+                    priority.value === "1" && " text-muted-foreground",
+                    priority.value === "2" && " text-accent-foreground",
+                    priority.value === "3" && " text-destructive"
+                 )} />
+                 
             )}
         </div>
     )

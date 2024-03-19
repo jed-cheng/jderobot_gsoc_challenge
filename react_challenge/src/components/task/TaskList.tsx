@@ -42,13 +42,13 @@ export default function TaskList<TData,TValue>({
     return (
         <div className="space-y-4">
             <TaskListToolbar table={table} />
-            <div className="w-full">
+            <div className="w-full space-y-2">
                 {table.getRowModel().rows?.length? (
                     table.getRowModel().rows.map((row, index) => (
                         <TaskListItem key={index} {...row.original as Task}  />
                     ))
                 ) : (
-                    <div>
+                    <div className="w-full text-center">
                         No tasks found
                     </div>
                 )}
