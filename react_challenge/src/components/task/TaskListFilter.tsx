@@ -91,8 +91,7 @@ export function TaskListFilter<TData, TValue>({
               {options.map((option) => {
                 const isSelected = selectedValues.has(option.value)
                 return (
-                  <div
-                    className="flex hover:bg-primary-foreground  p-2 cursor-pointer items-center"
+                  <CommandItem
                     key={option.value}
                     onSelect={() => {
                       console.log("onSelect:", option)
@@ -126,7 +125,7 @@ export function TaskListFilter<TData, TValue>({
                         {facets.get(option.value)}
                       </span>
                     )}
-                  </div>
+                  </CommandItem>
                 )
               })}
             </CommandGroup>
@@ -136,7 +135,7 @@ export function TaskListFilter<TData, TValue>({
                 <CommandGroup>
                   <CommandItem
                     onSelect={() => column?.setFilterValue(undefined)}
-                    className="justify-center text-center"
+                    className="justify-center text-center "
                   >
                     Clear filters
                   </CommandItem>
