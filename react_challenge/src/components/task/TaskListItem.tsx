@@ -10,7 +10,7 @@ export default function TaskListItem(props: Task) {
     const priority = priorities.find((p) => p.value === props.priority)
 
     return (
-        <div className=" flex items-center px-4 py-2 cursor-pointer min-w-40  min-h-16 border rounded-md hover:bg-primary-foreground">
+        <div className=" flex items-center px-4 py-2 cursor-pointer min-w-64  min-h-16 border rounded-md hover:bg-primary-foreground">
             <Checkbox className="mr-4 rounded-full"/>
             <div className="mr-4">
                 <span>{props.title}</span>

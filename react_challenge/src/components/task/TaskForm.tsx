@@ -12,36 +12,47 @@ import {
 
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {  Circle, Star, Tag } from "lucide-react"
-import DatePicker from "./DatePicker"
+import {  CalendarIcon, Circle, Star, Tag } from "lucide-react"
 import { Task, taskSchema } from "@/lib/schema"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { cn } from "@/lib/utils"
+import { useAppDispatch } from "@/lib/hooks"
+import { addTask, updateTask } from "@/lib/slices/task/taskSlice"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { format } from "date-fns"
+import { Calendar } from "../ui/calendar"
+import { useState } from "react"
 
 
-
-interface TodoFormProps {
-  todo?: Task  
+interface TaskFormProps {
+  task?: Task
+    
 }
 
 export default function TaskForm({
-  todo
-}: TodoFormProps) {
+  task
+}: TaskFormProps) {
+  const dispatch = useAppDispatch();
   const form = useForm<Task>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      title: todo?.title,
-      due: todo?.due,
-      category: todo?.category,
-      priority: todo?.priority,
+      title: task?.title ?? "",
+      due: task?.due ?? undefined,
+      category: task?.category ?? undefined,
+      priority: task?.priority ?? undefined,
     }
   })
-
+  const [isOpen, setIsOpen] = useState(false)
   const title = form.watch("title")
+
  
   function onSubmit(values: Task) {
+    if(task){
+      dispatch(updateTask({...task, ...values}))
+    } else {
+      dispatch(addTask({...values}))
+    }
 
-    console.log(values)
   }
 
   return (
@@ -66,15 +77,45 @@ export default function TaskForm({
           name="due"
           render={({ field }) => (
             <FormItem>
-              <DatePicker 
-                mode="single"
-                onSelect={field.onChange} 
-                selected={field.value} 
-                disabled={(date) =>
-                  date < new Date("1900-01-01")
-                }
-                initialFocus
-              />
+              <Popover open={isOpen} onOpenChange={(open)=>setIsOpen(open)}>
+                <PopoverTrigger asChild>
+                  <div className="flex items-center">
+                  <CalendarIcon className="mr-2" />
+                  <FormControl>
+                    <Button
+                      onClick={(evt)=>{evt.preventDefault(); setIsOpen(true)}}
+                      variant={"outline"}
+                      className={cn(
+                        "h-12 w-full pl-3 text-left font-normal justify-start",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </FormControl>
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value? new Date(field.value): undefined}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date < new Date("1900-01-01")
+                    }
+                    initialFocus
+                  />
+                  <Button
+                    className="w-full" 
+                    onClick={()=>setIsOpen(false)}>
+                    Save
+                  </Button>
+                </PopoverContent>
+              </Popover>
             </FormItem>
           )}
         />

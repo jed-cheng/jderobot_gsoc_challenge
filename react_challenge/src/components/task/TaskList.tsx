@@ -1,5 +1,15 @@
 "use client";
-import { ColumnDef, ColumnFiltersState, SortingState, getCoreRowModel, getFacetedRowModel, getFacetedUniqueValues, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { 
+    ColumnDef, 
+    ColumnFiltersState, 
+    SortingState, 
+    getCoreRowModel, 
+    getFacetedRowModel, 
+    getFacetedUniqueValues, 
+    getFilteredRowModel, 
+    getPaginationRowModel, 
+    getSortedRowModel, 
+    useReactTable } from "@tanstack/react-table";
 import { useState } from "react";
 import TaskListToolbar from "./TaskListToolbar";
 import TaskListItem from "./TaskListItem";
@@ -40,7 +50,7 @@ export default function TaskList<TData,TValue>({
 
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 w-full">
             <TaskListToolbar table={table} />
             <div className="w-full space-y-2">
                 {table.getRowModel().rows?.length? (
@@ -53,6 +63,7 @@ export default function TaskList<TData,TValue>({
                     </div>
                 )}
             </div>
+
         </div>
     )
 };
