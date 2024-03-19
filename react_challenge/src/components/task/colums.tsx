@@ -9,7 +9,9 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: "title",
     header: "Title",
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+      const title = row.getValue(id) as string
+      const target = value.toLowerCase()
+      return title.toLowerCase().startsWith(target)
     },
   },
   {

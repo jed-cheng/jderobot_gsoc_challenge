@@ -12,11 +12,11 @@ import {
 
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {  Circle, Tag } from "lucide-react"
-import PrioritySelect from "./PrioritySelect"
+import {  Circle, Star, Tag } from "lucide-react"
 import DatePicker from "./DatePicker"
-import CategoryPicker from "./CategoryPicker"
 import { Task, taskSchema } from "@/lib/schema"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
+import { cn } from "@/lib/utils"
 
 
 
@@ -81,18 +81,41 @@ export default function TaskForm({
         <FormField
           control={form.control}
           name="priority"
-          render={({ field: {ref,onChange, ...rest} }) => (
+          render={({ field }) => (
             <FormItem>
-                <PrioritySelect onValueChange={onChange} {...rest} />
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                      <div className=" flex items-center">
+                          <Star className="mr-2" />
+                          <SelectTrigger  className={cn(
+                              "h-12",
+                              !field.value && "text-muted-foreground"
+                          )} >
+                              <SelectValue placeholder="Select a priority"  />
+                          </SelectTrigger>
+                      </div>
+                  </FormControl>
+                  <SelectContent>
+                      <SelectItem value="0" className=" h-3.5"></SelectItem>
+                      <SelectItem value="1">High</SelectItem>
+                      <SelectItem value="2">Mid</SelectItem>
+                      <SelectItem value="3">Low</SelectItem>
+                  </SelectContent>
+              </Select>
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
           name="category"
-          render={({ field:{ref, ...rest} }) => (
+          render={({ field }) => (
             <FormItem>
-              <CategoryPicker {...rest} />
+              <div className=" flex items-center">
+                  <Tag className="mr-2" />
+                  <FormControl>
+                      <Input className="h-12" placeholder="Pick a category" {...field} />
+                  </FormControl>
+              </div>
             </FormItem>
           )}
         />
