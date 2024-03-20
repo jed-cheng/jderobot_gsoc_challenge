@@ -20,17 +20,22 @@ export const columns: ColumnDef<Task>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-    sortingFn: (rowA, rowB, id) => {
-      const valueA = rowA.getValue(id) ?? 0;
-      const valueB = rowB.getValue(id) ?? 0;
-      return valueA < valueB ? 1 : -1;
+  },
+  {
+    accessorKey: "isComplete",
+    header: "isComplete",
+    filterFn: (row, id, value) => {
+      const isComplete = row.getValue(id) ? "true" : "false"
+      return value.includes(isComplete)
     }
   },
   {
     accessorKey: "priority",
     header: "Priority",
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
+    sortingFn: (rowA, rowB, id) => {
+      const valueA = rowA.getValue(id) ?? 0;
+      const valueB = rowB.getValue(id) ?? 0;
+      return valueA < valueB ? -1 : 1;
+    }
   },
 ]

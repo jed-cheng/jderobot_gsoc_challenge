@@ -39,3 +39,14 @@ export const categories = [
       value: "other",
     },
 ]
+
+export const status = [
+  {
+    label: "Complete",
+    value: "true",
+  },
+  {
+    label: "Incomplete",
+    value: "false",
+  }
+]

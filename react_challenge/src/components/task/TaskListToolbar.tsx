@@ -3,7 +3,7 @@ import { Input } from "../ui/input"
 import { Cross2Icon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
 import { TaskListFilter } from "./TaskListFilter"
-import { categories, priorities } from "@/lib/consts"
+import { categories, priorities, status } from "@/lib/consts"
 import { TaskListSort } from "./TaskListSort"
 
 interface TaskListToolbarProps <TData> {
@@ -32,6 +32,13 @@ export default function TaskListToolbar<TData>({
                 column={table.getColumn("category")}
                 title="Category"
                 options={categories}
+                />
+            )}
+            {table.getColumn("isComplete") && (
+                <TaskListFilter
+                column={table.getColumn("isComplete")}
+                title="Status"
+                options={status}
                 />
             )}
             {table.getColumn("priority") && (

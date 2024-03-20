@@ -93,7 +93,6 @@ export function TaskListFilter<TData, TValue>({
                   <CommandItem
                     key={option.value}
                     onSelect={() => {
-                      console.log("onSelect:", option)
                       if (isSelected) {
                         selectedValues.delete(option.value)
                       } else {
