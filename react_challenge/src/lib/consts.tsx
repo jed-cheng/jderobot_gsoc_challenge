@@ -6,17 +6,17 @@ import {
 export const priorities = [
     {
       label: "Low",
-      value: "1",
+      value: 1,
       icon: CircleDashed ,
     },
     {
       label: "Medium",
-      value: "2",
+      value: 2,
       icon: CircleMinus,
     },
     {
       label: "High",
-      value: "3",
+      value: 3,
       icon: CircleAlert,
     },
 ]

@@ -4,6 +4,7 @@ import { Cross2Icon } from "@radix-ui/react-icons"
 import { Button } from "../ui/button"
 import { TaskListFilter } from "./TaskListFilter"
 import { categories, priorities } from "@/lib/consts"
+import { TaskListSort } from "./TaskListSort"
 
 interface TaskListToolbarProps <TData> {
     table: Table<TData>
@@ -34,11 +35,7 @@ export default function TaskListToolbar<TData>({
                 />
             )}
             {table.getColumn("priority") && (
-                <TaskListFilter
-                column={table.getColumn("priority")}
-                title="Priority"
-                options={priorities}
-                />
+                <TaskListSort column={table.getColumn("priority")} title="Priority" />
             )}
             {isFiltered && (
                 <Button

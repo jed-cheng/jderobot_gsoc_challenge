@@ -11,22 +11,23 @@ const initialState: TaskSliceState = {
   tasks: [
     {
       title: "Task 1",
+      priority:1
     },
     {
       title: "Task 2",
       category: "work",
-      priority: "1",
+      priority: 1,
       due: 1710823406558
     },
     {
       title: "Task 3",
       category: "work",
-      priority: "2"
+      priority: 2
     },
     {
       title: "Task 4",
       category: "work",
-      priority: "3"
+      priority: 3
     }
   ],
   curTask: undefined

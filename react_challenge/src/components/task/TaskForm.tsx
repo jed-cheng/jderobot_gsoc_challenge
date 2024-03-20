@@ -124,7 +124,7 @@ export default function TaskForm({
           name="priority"
           render={({ field }) => (
             <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={(value)=>field.onChange(Number(value))} defaultValue={field.value? String(field.value): undefined}>
                   <FormControl>
                       <div className=" flex items-center">
                           <Star className="mr-2" />

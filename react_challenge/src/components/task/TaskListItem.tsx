@@ -32,9 +32,9 @@ export default function TaskListItem(props: Task) {
             </div>
             {props.priority && priority?.icon && (
                  <priority.icon size={16} className={cn("inline mr-1 ml-auto",
-                    priority.value === "1" && " text-muted-foreground",
-                    priority.value === "2" && " text-accent-foreground",
-                    priority.value === "3" && " text-destructive"
+                    priority.value === 1 && " text-muted-foreground",
+                    priority.value === 2 && " text-accent-foreground",
+                    priority.value === 3 && " text-destructive"
                  )} />
                  
             )}
