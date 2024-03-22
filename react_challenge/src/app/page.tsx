@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen max-w-screen-md mx-auto flex-col items-center justify-between p-24">
-      <TaskList  tasks={tasks}/>
+      <TaskList  data={tasks}/>
       <AddTask/>
     </main>
   );

@@ -58,6 +58,9 @@ export const taskSlice = createSlice({
     }),
     editTask: create.reducer((state, action: PayloadAction<Task>)=>{
       state.curTask = action.payload
+    }),
+    reorderTasks: create.reducer((state, action: PayloadAction<Task[]>)=>{
+      state.tasks = action.payload
     })
   }),
   selectors: {
@@ -66,7 +69,7 @@ export const taskSlice = createSlice({
     }
 });
 
-export const {addTask, deleteTask, updateTask} = taskSlice.actions;
+export const {addTask, deleteTask, updateTask, reorderTasks} = taskSlice.actions;
 export const { selectTasks, selectCurTask } = taskSlice.selectors;
 
 // The function below is called a selector and allows us to select a value from

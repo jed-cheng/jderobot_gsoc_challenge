@@ -34,17 +34,18 @@ import TaskListItem from "./TaskListItem";
 import { Task } from "@/lib/schema";
 import { taskColumns } from "./colums";
 import DraggableItem from "./DraggableItem";
+import { useAppDispatch } from "@/lib/hooks";
+import { reorderTasks } from "@/lib/slices/task/taskSlice";
 
 interface TaskListProps {
-    tasks: Task[]
+    data: Task[]
 }
 
 
 export default function TaskList({
-    tasks
+    data
 }: TaskListProps) {
-
-    const [data, setData] = useState<Task[]>(tasks)
+    const dispatch = useAppDispatch();
     const dataIds = useMemo<UniqueIdentifier[]>(() =>
         data.map(({ id }) => id),[data])  
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -71,11 +72,10 @@ export default function TaskList({
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event
         if (active && over && active.id !== over.id) {
-        setData(data => {
             const oldIndex = dataIds.indexOf(active.id)
             const newIndex = dataIds.indexOf(over.id)
-            return arrayMove(data, oldIndex, newIndex) //this is just a splice util
-        })
+            const newOrder = arrayMove(data, oldIndex, newIndex)
+            dispatch(reorderTasks(newOrder))
         }
     }
 
@@ -116,6 +116,5 @@ export default function TaskList({
             </div>
         </div>
         </DndContext>
-
     )
 };
