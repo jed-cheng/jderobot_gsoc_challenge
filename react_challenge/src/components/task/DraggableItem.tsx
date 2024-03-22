@@ -3,18 +3,19 @@
 import { useSortable } from "@dnd-kit/sortable"
 import { CSSProperties } from "react";
 import { CSS } from '@dnd-kit/utilities'
+import { type UniqueIdentifier } from "@dnd-kit/core";
 
 interface DraggableItemProps
     extends React.HTMLAttributes<HTMLDivElement>{
-    uid: string | number
+    customId: UniqueIdentifier
 }
 
 export default function DraggableItem({
-    uid,
+    customId,
     ...props
 }: DraggableItemProps) {
-    const { transform, transition, setNodeRef, isDragging, attributes, listeners } = useSortable({
-        id: uid
+    const { transform, transition, setNodeRef, isDragging } = useSortable({
+        id: customId
     })
 
     const style: CSSProperties = {
@@ -30,8 +31,6 @@ export default function DraggableItem({
             ref={setNodeRef}
             style={style} 
             {...props}
-            {...attributes}
-            {...listeners}
         />
     )
 };

@@ -1,3 +1,5 @@
+"use client";
+
 import { CalendarDays, Circle } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { type Task } from "@/lib/schema";
@@ -6,6 +8,8 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { useAppDispatch } from "@/lib/hooks";
 import { updateTask } from "@/lib/slices/task/taskSlice";
+import DragHandle from "./DragHandle";
+import { Badge } from "../ui/badge";
 
 
 export default function TaskListItem(props: Task) {
@@ -22,29 +26,31 @@ export default function TaskListItem(props: Task) {
             <div className="mr-4">
                 <span>{props.title}</span>
                 <div className=" flex items-center flex-wrap gap-x-2 leading-tight  ">
+                    {props.priority && priority?.icon && (
+                        <Badge className={cn(" h-4 rounded-full align-middle",
+                            priority.value === 3 && "bg-destructive" 
+                        )}
+                            variant={priority.value == 1 ? "outline": "default"}
+                        
+                        >
+                            {priority.label}
+                        </Badge>
+                        )}
                     {props.due && (
-                        <span>
+                        <Badge variant={"outline"} className=" h-4 rounded-full  align-middle">
                             <CalendarDays size={14} className= " inline mr-1"/> 
                             <span className=" text-xs"> {format(props.due, "PPP")}</span>
-                        </span>
+                        </Badge>
                     )}
 
                     {props.category && (
-                        <span>
-                            <Circle size={8} className=" inline mr-1" />
-                            {props.category}
-                        </span>
+                            <Badge className=" h-4 rounded-full  align-middle" variant={"outline"}>
+                                {props.category}
+                            </Badge>
                     )}
                 </div>
             </div>
-            {props.priority && priority?.icon && (
-                 <priority.icon size={16} className={cn("inline mr-1 ml-auto",
-                    priority.value === 1 && " text-muted-foreground",
-                    priority.value === 2 && " text-accent-foreground",
-                    priority.value === 3 && " text-destructive"
-                 )} />
-                 
-            )}
+            <DragHandle customId={props.id} className="ml-auto"/>
         </div>
     )
 };

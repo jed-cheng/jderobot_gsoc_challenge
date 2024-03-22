@@ -10,7 +10,7 @@ export const priorities = [
       icon: CircleDashed ,
     },
     {
-      label: "Medium",
+      label: "Mid",
       value: 2,
       icon: CircleMinus,
     },
