@@ -4,7 +4,7 @@ import { Task } from "@/lib/schema"
 import { ColumnDef } from "@tanstack/react-table"
 
 
-export const columns: ColumnDef<Task>[] = [
+export const taskColumns: ColumnDef<Task>[] = [
   {
     accessorKey: "title",
     header: "Title",

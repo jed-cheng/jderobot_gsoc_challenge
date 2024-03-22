@@ -10,11 +10,13 @@ interface TaskSliceState {
 const initialState: TaskSliceState = {
   tasks: [
     {
+      id: "1",
       title: "Task 1",
       priority:1,
       isComplete: false
     },
     {
+      id: "2",
       title: "Task 2",
       category: "work",
       priority: 1,
@@ -22,12 +24,14 @@ const initialState: TaskSliceState = {
       isComplete: false
     },
     {
+      id: "3",
       title: "Task 3",
       category: "work",
       priority: 2,
       isComplete: false
     },
     {
+      id: "4",
       title: "Task 4",
       category: "work",
       priority: 3,

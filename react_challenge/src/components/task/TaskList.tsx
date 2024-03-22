@@ -1,6 +1,6 @@
 "use client";
+
 import { 
-    ColumnDef, 
     ColumnFiltersState, 
     SortingState, 
     getCoreRowModel, 
@@ -10,60 +10,112 @@ import {
     getPaginationRowModel, 
     getSortedRowModel, 
     useReactTable } from "@tanstack/react-table";
-import { useState } from "react";
+import {
+    DndContext,
+    KeyboardSensor,
+    MouseSensor,
+    TouchSensor,
+    closestCenter,
+    type DragEndEvent,
+    type UniqueIdentifier,
+    useSensor,
+    useSensors,
+    } from '@dnd-kit/core'
+import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
+import {
+    arrayMove,
+    SortableContext,
+    verticalListSortingStrategy,
+    } from '@dnd-kit/sortable'
+
+import { useMemo, useState } from "react";
 import TaskListToolbar from "./TaskListToolbar";
 import TaskListItem from "./TaskListItem";
 import { Task } from "@/lib/schema";
+import { taskColumns } from "./colums";
+import DraggableItem from "./DraggableItem";
 
-interface TaskListProps<TData, TValue> {
-    columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+interface TaskListProps {
+    tasks: Task[]
 }
 
 
-export default function TaskList<TData,TValue>({
-    columns,
-    data
-}: TaskListProps<TData,TValue>) {
+export default function TaskList({
+    tasks
+}: TaskListProps) {
 
-    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-      []
-    )
+    const [data, setData] = useState<Task[]>(tasks)
+    const dataIds = useMemo<UniqueIdentifier[]>(() =>
+        data.map(({ id }) => id),[data])  
+    const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
     const [sorting, setSorting] = useState<SortingState>([])
-  
-    const table = useReactTable({
-      data,
-      columns,
-      state: {
-        sorting,
-        columnFilters,
-      },
-      onSortingChange: setSorting,
-      onColumnFiltersChange: setColumnFilters,
-      getCoreRowModel: getCoreRowModel(),
-      getFilteredRowModel: getFilteredRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-      getSortedRowModel: getSortedRowModel(),
-      getFacetedRowModel: getFacetedRowModel(),
-      getFacetedUniqueValues: getFacetedUniqueValues(),
+    const table = useReactTable<Task>({
+        data,
+        columns: taskColumns,
+        state: {
+            sorting,
+            columnFilters,
+        },
+        getRowId: (row) => row.id,
+        onSortingChange: setSorting,
+        onColumnFiltersChange: setColumnFilters,
+        getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFacetedRowModel: getFacetedRowModel(),
+        getFacetedUniqueValues: getFacetedUniqueValues(),
     })
+
+    // reorder rows after drag & drop
+    function handleDragEnd(event: DragEndEvent) {
+        const { active, over } = event
+        if (active && over && active.id !== over.id) {
+        setData(data => {
+            const oldIndex = dataIds.indexOf(active.id)
+            const newIndex = dataIds.indexOf(over.id)
+            return arrayMove(data, oldIndex, newIndex) //this is just a splice util
+        })
+        }
+    }
+
+    const sensors = useSensors(
+        useSensor(MouseSensor, {}),
+        useSensor(TouchSensor, {}),
+        useSensor(KeyboardSensor, {})
+    )
+
 
 
     return (
+        <DndContext
+            collisionDetection={closestCenter}
+            modifiers={[restrictToVerticalAxis]}
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+        >
         <div className="space-y-4 w-full">
             <TaskListToolbar table={table} />
             <div className="w-full space-y-2">
-                {table.getRowModel().rows?.length? (
-                    table.getRowModel().rows.map((row, index) => (
-                        <TaskListItem key={index} {...row.original as Task}  />
-                    ))
-                ) : (
-                    <div className="w-full text-center">
-                        No tasks found
-                    </div>
-                )}
+                <SortableContext
+                    items={dataIds}
+                    strategy={verticalListSortingStrategy}
+                >
+                    {table.getRowModel().rows?.length? (
+                        table.getRowModel().rows.map((row, index) => (
+                            <DraggableItem key={index} uid={row.id}>
+                                <TaskListItem  {...row.original}  />
+                            </DraggableItem>
+                        ))
+                    ) : (
+                        <div className="w-full text-center">
+                            No tasks found
+                        </div>
+                    )}
+                </SortableContext>
             </div>
-
         </div>
+        </DndContext>
+
     )
 };
