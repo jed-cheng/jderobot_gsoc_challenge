@@ -9,37 +9,54 @@ blue = (0, 0, 255)
 
 
 class Robot :
-    def __init__(self,  color=blue, center=[100, 100], radius=40, direction=0.0):
-        self.radius = radius
-        self.color = color
-        self.direction = direction
-        self.center = center
-        self.left = center[0] - radius
-        self.right = center[0] + radius
+    def __init__(self, center, radius=20, speed=10, angle=None):
+        filename = "pacman.png"
+        image = pygame.image.load(filename).convert_alpha()
+
+        if angle is None:
+            angle = random.randrange(0, 360)
+        if center is None:
+            center = (radius, radius)        
+        self.original_image = pygame.transform.scale(image, (radius*2, radius*2))
+        self.image = pygame.transform.rotate(self.original_image, angle)
+        self.rect = self.image.get_rect(center = center)
+        self.vector = pygame.math.Vector2()
+        self.vector.from_polar((speed, angle))
+        self.pos = pygame.math.Vector2(self.rect.center)
+        self.angle = angle
     
-    def move(self, direction=0.0, distance=1.0):
-        if not direction:
-            direction = self.direction
-        dx = distance * math.cos(math.radians(direction))
-        dy = distance * math.sin(math.radians(direction))
-        self.center[0] += dx
-        self.center[1] += dy
-        self.left += dx
-        self.right += dx
+    def forward(self):
+        self.pos += self.vector
+        self.rect.center = self.pos
 
     
-    def rotate(self, angle: float):
-        return self
-    
-    def run(self, arena=None):
-        if not arena:
-            return
+    def rotate(self, angle=1):
+        # self.vector.rotate(angle) 
+        self.angle =math.floor((self.angle+angle)%360)
+
+        self.image = pygame.transform.rotate(self.original_image, self.angle)
+        self.rect = self.image.get_rect(center=self.rect.center)
+
+
+   
+    def update(self, arena):
+        border_width = arena.border_width
+        if self.rect.left <= border_width or self.rect.right+border_width >= arena.rect.width:
+            # self.rotate()
+            pass
+
+        elif self.rect.top <= border_width or self.rect.bottom+border_width >= arena.rect.height:
+            # self.rotate()
+            pass
+        else:
+            self.forward()
+        
     def draw(self, screen):
-        pygame.draw.circle(surface=screen, color=self.color,
-                center=(round(self.center[0]),round(self.center[1])), radius=self.radius)
+        screen.blit(self.image, self.rect)
+
         
 if __name__ == "__main__":
-    bot = Robot(color=blue, center=[100, 100], radius=40, direction=random.randrange(0, 360, step=1))
-    bot.move()
-    print(bot.center)
+    pass
+
+
         
