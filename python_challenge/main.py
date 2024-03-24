@@ -20,7 +20,7 @@ def main():
     clock = pygame.time.Clock()    
 
     arena = Arena()
-    robot = arena.add_robot(radius=20)
+    robot = arena.add_robot()
 
     while True:
         for event in pygame.event.get():
@@ -29,8 +29,7 @@ def main():
                 exit()
 
         #logical update
-        # robot.update(arena)
-        robot.rotate()
+        robot.run(arena)
 
         # render
         screen.fill(white)
@@ -39,7 +38,7 @@ def main():
         robot.draw(screen)
 
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(60)
 
 
      
