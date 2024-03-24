@@ -12,7 +12,7 @@ class Arena() :
     def draw(self, screen):
         pygame.draw.rect(screen, (0, 0, 0), self.rect, self.border_width)
 
-    def add_robot(self, center=None, radius=20, speed=5, angle=None):
+    def add_robot(self, center=None, radius=20, speed=3.0, angle=None):
         if center is None:
             center = (self.rect.width//2, self.rect.height//2)
         return Robot(self, center, radius, speed, angle)

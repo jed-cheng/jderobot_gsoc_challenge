@@ -9,7 +9,7 @@ blue = (0, 0, 255)
 
 
 class Robot :
-    def __init__(self, arena, center=None,  radius=20, speed=1, angle=None):
+    def __init__(self, arena, center=None,  radius=20, speed=1.0, angle=None):
         filename = "pacman.png"
         image = pygame.image.load(filename).convert_alpha()
         vector = pygame.math.Vector2((speed, 0))
@@ -28,15 +28,16 @@ class Robot :
         self.rotating_ticks = 0
     
     def forward(self):
-        self.rect.center += self.vector
+        self.rect = self.next_rect()
 
     
     def rotate(self, delta=1):
-        self.vector = self.vector.rotate(delta)
-        angle = -self.vector.as_polar()[1]
+        next_vector = self.vector.rotate(delta)
+        angle = -next_vector.as_polar()[1]
         
         self.image = pygame.transform.rotozoom(self.original_image, angle,1)
         self.rect = self.image.get_rect(center=self.rect.center)
+        self.vector = next_vector
 
     def set_rotating_ticks(self, ticks=None):
         if ticks is None:
@@ -44,7 +45,9 @@ class Robot :
         self.rotating_ticks = ticks
     
     def next_rect(self):
-        return self.rect.move(self.vector)
+        next_rect = self.rect.copy()
+        next_rect.center += self.vector
+        return next_rect
 
     def run(self):
         boreder_width = self.arena.border_width
