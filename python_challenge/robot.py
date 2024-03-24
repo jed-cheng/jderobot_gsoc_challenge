@@ -12,6 +12,7 @@ class Robot :
     def __init__(self, center, radius=20, speed=1, angle=None):
         filename = "pacman.png"
         image = pygame.image.load(filename).convert_alpha()
+        vector = pygame.math.Vector2((speed, 0))
 
         if angle is None:
             angle = random.randrange(0, 360)
@@ -20,10 +21,8 @@ class Robot :
         self.original_image = pygame.transform.scale(image, (radius*2, radius*2))
         self.image = pygame.transform.rotate(self.original_image, -angle)
         self.rect = self.image.get_rect(center = center)
-        self.vector = pygame.math.Vector2()
-        self.vector.from_polar((speed, angle))
+        self.vector = vector.rotate(angle)
         self.pos = pygame.math.Vector2(self.rect.center)
-        self.angle = -angle
         self.radius = radius
     
     def forward(self):
@@ -31,10 +30,11 @@ class Robot :
         self.rect.center = self.pos
 
     
-    def rotate(self, delta=5):
-        self.angle += delta
-        # self.vector = self.vector.rotate(delta) 
-        self.image = pygame.transform.rotozoom(self.original_image, self.angle,1)
+    def rotate(self, delta=1):
+        self.vector = self.vector.rotate(delta)
+        angle = -self.vector.as_polar()[1]
+        
+        self.image = pygame.transform.rotozoom(self.original_image, angle,1)
         self.rect = self.image.get_rect(center=self.rect.center)
 
 
