@@ -40,23 +40,22 @@ class Robot :
 
    
     def run(self, arena):
-        border_width = arena.border_width
-        if self.rect.centerx<= border_width+self.radius:
-            self.rect.centerx = border_width+self.radius
-            self.rotate()
-        
-        elif self.rect.centerx >= arena.rect.width-border_width-self.radius:
-            self.rect.centerx = arena.rect.width-border_width-self.radius
-            self.rotate()
+        min_centerx = min_centery = arena.border_width+self.radius
+        max_centerx = arena.rect.width-arena.border_width-self.radius
+        max_centery = arena.rect.height-arena.border_width-self.radius
 
-        elif self.rect.centery <= border_width+self.radius:
-            self.rect.centery = border_width+self.radius
+        if self.rect.centerx<= min_centerx:
+            self.rect.centerx = min_centerx
             self.rotate()
-            pass
-        elif self.rect.centery >= arena.rect.height-border_width-self.radius:
-            self.rect.centery = arena.rect.height-border_width-self.radius
+        elif self.rect.centerx >= max_centerx:
+            self.rect.centerx = max_centerx
             self.rotate()
-            pass
+        elif self.rect.centery <= min_centery:
+            self.rect.centery = min_centery
+            self.rotate()
+        elif self.rect.centery >= max_centery:
+            self.rect.centery = max_centery
+            self.rotate()
         else:
             self.forward()
         
