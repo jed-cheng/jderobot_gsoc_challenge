@@ -3,9 +3,9 @@ from robot import Robot
 
 
 class Arena() :
-    def __init__(self, width=1000, height=600, border_width=3) :
+    def __init__(self, size=(1000,600), border_width=10) :
 
-        self.image = pygame.Surface((width, height))
+        self.image = pygame.Surface(size)
         self.rect = self.image.get_rect()
         self.border_width = border_width
     
@@ -15,7 +15,7 @@ class Arena() :
     def add_robot(self, center=None, radius=20, speed=5, angle=None):
         if center is None:
             center = (self.rect.width//2, self.rect.height//2)
-        return Robot(center, radius, speed, angle)
+        return Robot(self, center, radius, speed, angle)
 
 if __name__ == "__main__":
     pass

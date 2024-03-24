@@ -9,7 +9,7 @@ blue = (0, 0, 255)
 
 
 class Robot :
-    def __init__(self, center, radius=20, speed=1, angle=None):
+    def __init__(self, arena, center=None,  radius=20, speed=1, angle=None):
         filename = "pacman.png"
         image = pygame.image.load(filename).convert_alpha()
         vector = pygame.math.Vector2((speed, 0))
@@ -17,18 +17,18 @@ class Robot :
         if angle is None:
             angle = random.randrange(0, 360)
         if center is None:
-            center = (radius, radius)        
+            center = (arena.rect.width//2, arena.rect.height//2)
+
+        self.arena = arena        
         self.original_image = pygame.transform.scale(image, (radius*2, radius*2))
         self.image = pygame.transform.rotate(self.original_image, -angle)
         self.rect = self.image.get_rect(center = center)
         self.vector = vector.rotate(angle)
-        self.pos = pygame.math.Vector2(self.rect.center)
         self.radius = radius
         self.rotating_ticks = 0
     
     def forward(self):
-        self.pos += self.vector
-        self.rect.center = self.pos
+        self.rect.center += self.vector
 
     
     def rotate(self, delta=1):
@@ -40,16 +40,17 @@ class Robot :
 
     def set_rotating_ticks(self, ticks=None):
         if ticks is None:
-            ticks = random.randrange(10, 100)
+            ticks = random.randrange(90, 180)
         self.rotating_ticks = ticks
     
     def next_rect(self):
         return self.rect.move(self.vector)
 
-    def run(self, arena):
-        min_centerx = min_centery = arena.border_width+self.radius
-        max_centerx = arena.rect.width-arena.border_width-self.radius
-        max_centery = arena.rect.height-arena.border_width-self.radius
+    def run(self):
+        boreder_width = self.arena.border_width
+        min_centerx = min_centery = boreder_width+self.radius
+        max_centerx = self.arena.rect.width-boreder_width-self.radius
+        max_centery = self.arena.rect.height-boreder_width-self.radius
         next_rect = self.next_rect()
 
         if self.rotating_ticks > 0:
