@@ -18,7 +18,7 @@ const initialState: TaskSliceState = {
     {
       id: "2",
       title: "Task 2",
-      category: "work",
+      categories: ["work"],
       priority: 1,
       due: 1710823406558,
       isComplete: false
@@ -26,14 +26,14 @@ const initialState: TaskSliceState = {
     {
       id: "3",
       title: "Task 3",
-      category: "work",
+      categories: ["work"],
       priority: 2,
       isComplete: false
     },
     {
       id: "4",
       title: "Task 4",
-      category: "work",
+      categories: ["work"],
       priority: 3,
       isComplete: false
     }

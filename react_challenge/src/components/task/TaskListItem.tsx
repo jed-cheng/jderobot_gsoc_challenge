@@ -13,6 +13,7 @@ import TaskForm from "./TaskForm";
 import { Task } from "@/lib/types";
 import DueBadge from "./DueBadge";
 import PriorityBadge from "./PriorityBadge";
+import CategoryBadge from "./CategoryBadge";
 
 
 
@@ -31,18 +32,16 @@ export default function TaskListItem(props: Task) {
                 <DialogTrigger asChild>
                     <div className="mr-4" >
                         <span>{props.title}</span>
-                        <div className=" flex items-center flex-wrap gap-x-2 leading-tight  ">
+                        <div className=" flex items-center flex-wrap gap-x-2 gap-y-1 leading-tight  ">
                             {priority && (
                                 <PriorityBadge priority={priority}/>
                             )}
                             {props.due && (
                                 <DueBadge due={props.due}/>
                             )}
-                            {props.category && (
-                                <Badge className=" h-4 rounded-full  align-middle" variant={"outline"}>
-                                    {props.category}
-                                </Badge>
-                            )}
+                            {props.categories && props.categories.map((category) => (
+                                <CategoryBadge key={category} category={category}/>
+                            ))}
                         </div>
                     </div>
                 </DialogTrigger>

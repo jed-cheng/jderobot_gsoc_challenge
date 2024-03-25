@@ -2,7 +2,7 @@ export type Task = {
     id: string
     title: string
     due?: number
-    category?: string
+    categories?: string[]
     priority: number
     isComplete: boolean
 }

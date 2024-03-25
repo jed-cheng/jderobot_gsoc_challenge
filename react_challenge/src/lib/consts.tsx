@@ -1,3 +1,4 @@
+import { Option } from "@/components/ui/multi-select"
 
 export const priorities = [
     {
@@ -14,7 +15,7 @@ export const priorities = [
     },
 ]
 
-export const categories = [
+export const categories:Option[] = [
     {
       label: "Personal",
       value: "personal",

@@ -21,6 +21,8 @@ import { format } from "date-fns"
 import { Calendar } from "../ui/calendar"
 import { useState } from "react"
 import { Task } from "@/lib/types"
+import { categories } from "@/lib/consts"
+import MultipleSelector, { Option } from "../ui/multi-select"
 
 
 interface TaskFormProps {
@@ -30,7 +32,7 @@ interface TaskFormProps {
 const taskSchema = z.object({
   title: z.string(),
   due: z.date().optional().transform((val)=>val?.getTime()),
-  category: z.string().optional(),
+  categories: z.string().array(),
   priority: z.number().min(1).max(3),
 })
 
@@ -43,7 +45,7 @@ export default function TaskForm({
     defaultValues: {
       title: task?.title ?? "",
       due: task?.due ?? undefined,
-      category: task?.category ?? undefined,
+      categories: task?.categories ?? [],
       priority: task?.priority ?? undefined,
     }
   })
@@ -153,13 +155,24 @@ export default function TaskForm({
         />
         <FormField
           control={form.control}
-          name="category"
+          name="categories"
           render={({ field }) => (
             <FormItem>
               <div className=" flex items-center">
                   <Tag className="mr-2" />
                   <FormControl>
-                      <Input className="h-12" placeholder="Pick a category" {...field} />
+                    <MultipleSelector
+                      defaultOptions={categories}
+                      placeholder="Select frameworks you like..."
+                      value={field.value?.map((value)=>(categories.find((category)=>category.value === value) as Option)) ?? []}
+                      
+                      emptyIndicator={
+                        <p className="text-center text-lg leading-10 text-gray-600 dark:text-gray-400">
+                          no results found.
+                        </p>
+                      }
+                      onChange={(options)=>field.onChange(options.map((option)=>option.value))}
+                    />
                   </FormControl>
               </div>
             </FormItem>
