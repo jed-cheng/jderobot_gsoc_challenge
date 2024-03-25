@@ -4,13 +4,13 @@ import { CalendarDays } from "lucide-react"
 import { format } from "date-fns"
 
 interface DueBadgeProps {
-    due: Date
+    due: number
 }
 
 export default function DueBadge({
     due
 }:DueBadgeProps) {
-    const days = daysFromNow(due)
+    const days = daysFromNow(new Date(due))
     return (
         <Badge variant={"outline"} className={cn("h-4 rounded-full  align-middle",
             days <= 0 && "bg-destructive text-destructive-foreground",

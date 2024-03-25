@@ -1,5 +1,5 @@
-import { Task } from '@/lib/schema';
-import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { Task } from '@/lib/types';
+import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 
 interface TaskSliceState {
@@ -46,7 +46,8 @@ export const taskSlice = createSlice({
   initialState,
   reducers: (create) =>({
     addTask: create.reducer((state, action:PayloadAction<Task>)=>{
-      state.tasks.push(action.payload)
+      const task = {...action.payload, id: (state.tasks.length + 1).toString(), isComplete: false}
+      state.tasks.push(task)
     }),
     deleteTask: create.reducer((state, action: PayloadAction<Task>)=>{
       const index = state.tasks.findIndex((task) => task.title === action.payload.title)

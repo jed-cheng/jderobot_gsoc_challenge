@@ -32,11 +32,11 @@ import {
 import { useMemo, useState } from "react";
 import TaskListToolbar from "./TaskListToolbar";
 import TaskListItem from "./TaskListItem";
-import { Task } from "@/lib/schema";
 import { taskColumns } from "./colums";
 import DraggableItem from "./DraggableItem";
 import { useAppDispatch } from "@/lib/hooks";
 import { reorderTasks } from "@/lib/slices/task/taskSlice";
+import { Task } from "@/lib/types";
 
 interface TaskListProps {
     data: Task[]

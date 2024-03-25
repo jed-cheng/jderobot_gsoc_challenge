@@ -1,6 +1,6 @@
 "use client"
 
-import { Task } from "@/lib/schema"
+import { Task } from "@/lib/types"
 import { ColumnDef } from "@tanstack/react-table"
 
 

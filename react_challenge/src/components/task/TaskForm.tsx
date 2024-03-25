@@ -2,18 +2,16 @@
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
   FormField,
-  FormItem,
-
-} from "@/components/ui/form"
+  FormItem} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import {  CalendarIcon, Circle, Star, Tag } from "lucide-react"
-import { Task, taskSchema } from "@/lib/schema"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select"
 import { cn } from "@/lib/utils"
 import { useAppDispatch } from "@/lib/hooks"
@@ -22,12 +20,19 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { format } from "date-fns"
 import { Calendar } from "../ui/calendar"
 import { useState } from "react"
+import { Task } from "@/lib/types"
 
 
 interface TaskFormProps {
   task?: Task
-    
 }
+
+const taskSchema = z.object({
+  title: z.string(),
+  due: z.date().optional().transform((val)=>val?.getTime()),
+  category: z.string().optional(),
+  priority: z.number().min(1).max(3),
+})
 
 export default function TaskForm({
   task
@@ -47,6 +52,7 @@ export default function TaskForm({
 
  
   function onSubmit(values: Task) {
+    console.log(values)
     if(task){
       dispatch(updateTask({...task, ...values}))
     } else {
@@ -137,7 +143,6 @@ export default function TaskForm({
                       </div>
                   </FormControl>
                   <SelectContent>
-                      <SelectItem value="0" className=" h-3.5"></SelectItem>
                       <SelectItem value="1">High</SelectItem>
                       <SelectItem value="2">Mid</SelectItem>
                       <SelectItem value="3">Low</SelectItem>

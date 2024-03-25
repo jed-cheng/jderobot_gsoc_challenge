@@ -1,23 +1,16 @@
-import { 
-  CircleAlert, 
-  CircleDashed, 
-  CircleMinus } from "lucide-react";
 
 export const priorities = [
     {
       label: "Low",
       value: 1,
-      icon: CircleDashed ,
     },
     {
       label: "Mid",
       value: 2,
-      icon: CircleMinus,
     },
     {
       label: "High",
       value: 3,
-      icon: CircleAlert,
     },
 ]
 
