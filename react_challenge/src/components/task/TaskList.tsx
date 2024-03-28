@@ -20,7 +20,6 @@ import {
     type UniqueIdentifier,
     useSensor,
     useSensors,
-    DragOverEvent,
     } from '@dnd-kit/core'
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers'
 import {
@@ -86,6 +85,7 @@ export default function TaskList({
         useSensor(KeyboardSensor, {})
     )
 
+
     return (
         <DndContext
             collisionDetection={closestCenter}
@@ -100,7 +100,7 @@ export default function TaskList({
                     items={dataIds}
                     strategy={verticalListSortingStrategy}
                 >
-                    {table.getRowModel().rows?.length&& (
+                    {table.getRowModel().rows?.length > 0&& (
                         table.getRowModel().rows.map((row) => (
                             <DraggableItem key={row.id} customId={row.id}>
                                 <TaskListItem  {...row.original}  />

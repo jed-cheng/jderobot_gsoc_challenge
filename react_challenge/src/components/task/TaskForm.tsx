@@ -27,6 +27,7 @@ import MultipleSelector, { Option } from "../ui/multi-select"
 
 interface TaskFormProps {
   task?: Task
+  postSubmit?: () => void
 }
 
 const taskSchema = z.object({
@@ -37,7 +38,8 @@ const taskSchema = z.object({
 })
 
 export default function TaskForm({
-  task
+  task,
+  postSubmit
 }: TaskFormProps) {
   const dispatch = useAppDispatch();
   const form = useForm<Task>({
@@ -60,7 +62,7 @@ export default function TaskForm({
     } else {
       dispatch(addTask({...values}))
     }
-
+    postSubmit?.()
   }
 
   return (

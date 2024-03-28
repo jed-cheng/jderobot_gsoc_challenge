@@ -15,11 +15,17 @@ export const taskColumns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: "category",
+    accessorKey: "categories",
     header: "Category",
     filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
+      const categories = row.getValue(id)as string[] ?? [] 
+      for (const category of categories) {
+        if (value.includes(category)) {
+          return true
+        }
+      }
+      return false
+    }
   },
   {
     accessorKey: "isComplete",

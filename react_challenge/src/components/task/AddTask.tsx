@@ -21,7 +21,7 @@ export default function AddTask() {
                 </div>
             </DialogTrigger>
             <DialogContent>
-                <TaskForm/>
+                <TaskForm postSubmit={()=>setIsOpen(false)}/>
             </DialogContent>
         </Dialog>
 
