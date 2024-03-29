@@ -30,9 +30,7 @@ export function TaskListSort<TData, TValue>({
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
             <Button
-                variant="ghost"
-                size="sm"
-                className="-ml-3 h-8 data-[state=open]:bg-accent"
+                variant="outline" size="sm" className="h-8 border-dashed"
             >
                 <span>{title}</span>
                 {column.getIsSorted() === "desc" ? (

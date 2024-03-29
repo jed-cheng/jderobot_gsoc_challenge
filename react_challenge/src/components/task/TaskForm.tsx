@@ -48,7 +48,7 @@ export default function TaskForm({
       title: task?.title ?? "",
       due: task?.due ?? undefined,
       categories: task?.categories ?? [],
-      priority: task?.priority ?? undefined,
+      priority: task?.priority ?? 1,
     }
   })
   const [isOpen, setIsOpen] = useState(false)
