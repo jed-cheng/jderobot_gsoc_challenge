@@ -18,7 +18,7 @@ export default function DueBadge({
         )}>
             <CalendarDays size={14} className= " inline mr-1"/>
                 <span className=" text-xs">
-                    {days < 0 && format(due, "PPP")}
+                    {(days < 0 || days > 1) && format(due, "PPP")}
                     {days == 0 && "Today"}
                     {days == 1 && "Tomorrow"}
                 </span>

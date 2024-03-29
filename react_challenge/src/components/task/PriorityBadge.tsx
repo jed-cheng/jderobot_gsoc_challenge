@@ -12,7 +12,7 @@ export default function PriorityBadge({
 }:PriorityBadgeProps) {
     return (
         <Badge className={cn(" h-4 rounded-full align-middle",
-            priority.value === 3 && "bg-destructive" 
+            priority.value ===3 && "bg-destructive" 
         )}
             variant={priority.value == 1 ? "outline": "default"}
         >
