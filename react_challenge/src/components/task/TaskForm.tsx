@@ -56,7 +56,6 @@ export default function TaskForm({
 
  
   function onSubmit(values: Task) {
-    console.log(values)
     if(task){
       dispatch(updateTask({...task, ...values}))
     } else {

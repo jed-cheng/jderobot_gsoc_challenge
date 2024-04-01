@@ -13,12 +13,13 @@ const initialState: TaskSliceState = {
       id: "1",
       title: "Task 1",
       priority:1,
+      categories: ["other"],
       isComplete: false
     },
     {
       id: "2",
       title: "Task 2",
-      categories: ["work"],
+      categories: ["personal"],
       priority: 1,
       due: 1710823406558,
       isComplete: false
@@ -27,14 +28,14 @@ const initialState: TaskSliceState = {
       id: "3",
       title: "Task 3",
       categories: ["work"],
-      priority: 2,
+      priority: 3,
       isComplete: false
     },
     {
       id: "4",
       title: "Task 4",
       categories: ["work"],
-      priority: 3,
+      priority: 2,
       isComplete: false
     }
   ],
@@ -54,7 +55,7 @@ export const taskSlice = createSlice({
       state.tasks.splice(index, 1)
     }),
     updateTask: create.reducer((state, action: PayloadAction<Task>)=>{
-      const index = state.tasks.findIndex((task) => task.title === action.payload.title)
+      const index = state.tasks.findIndex((task) => task.id === action.payload.id)
       state.tasks[index] = action.payload
     }),
     editTask: create.reducer((state, action: PayloadAction<Task>)=>{
